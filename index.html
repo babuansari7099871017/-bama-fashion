@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAMA — Premium Fashion</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+    background:#f7f7f5;
+    color:#111;
+}
+
+header{
+    background:#111;
+    color:white;
+    padding:18px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+
+.logo{
+    font-size:28px;
+    font-weight:800;
+    letter-spacing:4px;
+}
+
+.cart{
+    cursor:pointer;
+    font-size:17px;
+}
+
+.hero{
+    min-height:520px;
+    background:
+      linear-gradient(rgba(0,0,0,.48),rgba(0,0,0,.48)),
+      url("https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1600&q=80")
+      center/cover;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:white;
+    padding:30px;
+}
+
+.hero h1{
+    font-size:clamp(45px,9vw,90px);
+    letter-spacing:8px;
+}
+
+.hero p{
+    margin:15px 0 25px;
+    font-size:18px;
+}
+
+.btn{
+    display:inline-block;
+    padding:14px 28px;
+    background:white;
+    color:#111;
+    text-decoration:none;
+    font-weight:bold;
+    border-radius:3px;
+}
+
+.section{
+    padding:55px 6%;
+}
+
+.title{
+    text-align:center;
+    margin-bottom:30px;
+}
+
+.title h2{
+    font-size:34px;
+    letter-spacing:2px;
+}
+
+.categories{
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+.categories button{
+    padding:11px 22px;
+    border:1px solid #111;
+    background:white;
+    cursor:pointer;
+    border-radius:25px;
+}
+
+.categories button.active,
+.categories button:hover{
+    background:#111;
+    color:white;
+}
+
+.search{
+    max-width:500px;
+    margin:0 auto 35px;
+}
+
+.search input{
+    width:100%;
+    padding:15px 18px;
+    border:1px solid #ddd;
+    border-radius:30px;
+    outline:none;
+}
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:22px;
+}
+
+.product{
+    background:white;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.08);
+}
+
+.product img{
+    width:100%;
+    height:300px;
+    object-fit:cover;
+}
+
+.info{
+    padding:17px;
+}
+
+.info h3{
+    margin-bottom:8px;
+}
+
+.price{
+    font-weight:bold;
+    font-size:18px;
+    margin-bottom:12px;
+}
+
+.order{
+    width:100%;
+    border:0;
+    padding:12px;
+    background:#111;
+    color:white;
+    cursor:pointer;
+    border-radius:5px;
+}
+
+.about{
+    background:#111;
+    color:white;
+    text-align:center;
+}
+
+.contact{
+    text-align:center;
+}
+
+.contact a{
+    color:#111;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+footer{
+    background:#050505;
+    color:#aaa;
+    text-align:center;
+    padding:25px;
+    font-size:14px;
+}
+
+@media(max-width:900px){
+    .products{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:550px){
+    header{
+        padding:15px 5%;
+    }
+
+    .logo{
+        font-size:23px;
+    }
+
+    .hero{
+        min-height:450px;
+    }
+
+    .products{
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+    }
+
+    .product img{
+        height:220px;
+    }
+
+    .info{
+        padding:12px;
+    }
+
+    .info h3{
+        font-size:15px;
+    }
+
+    .price{
+        font-size:16px;
+    }
+
+    .section{
+        padding:40px 4%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">BAMA</div>
+    <div class="cart">🛒 Cart (<span id="cartCount">0</span>)</div>
+</header>
+
+<section class="hero">
+    <div>
+        <h1>BAMA</h1>
+        <p>Premium Fashion for Men & Women</p>
+        <a href="#shop" class="btn">SHOP NOW</a>
+    </div>
+</section>
+
+<section class="section" id="shop">
+
+    <div class="title">
+        <h2>OUR COLLECTION</h2>
+        <p>Discover your style.</p>
+    </div>
+
+    <div class="search">
+        <input
+          type="text"
+          id="search"
+          placeholder="Search clothes..."
+          onkeyup="showProducts()">
+    </div>
+
+    <div class="categories">
+        <button class="active" onclick="filterProducts('all',this)">All</button>
+        <button onclick="filterProducts('men',this)">Men</button>
+        <button onclick="filterProducts('women',this)">Women</button>
+    </div>
+
+    <div class="products" id="products"></div>
+
+</section>
+
+<section class="section about">
+    <div class="title">
+        <h2>ABOUT BAMA</h2>
+    </div>
+
+    <p>
+        BAMA brings premium and stylish fashion for Men & Women.
+        Discover modern designs made for your everyday style.
+    </p>
+</section>
+
+<section class="section contact">
+
+    <div class="title">
+        <h2>CONTACT US</h2>
+    </div>
+
+    <p>📞 Mobile: <a href="tel:8822153715">8822153715</a></p>
+    <br>
+    <p>💬 WhatsApp:
+        <a href="https://wa.me/918822153715" target="_blank">
+            Chat with us
+        </a>
+    </p>
+    <br>
+    <p>📧 Email:
+        <a href="mailto:babuansari7099871017@gmail.com">
+            babuansari7099871017@gmail.com
+        </a>
+    </p>
+
+</section>
+
+<footer>
+    © 2026 BAMA. All Rights Reserved.
+</footer>
+
+<script>
+
+const products = [
+
+{
+name:"Premium Black Shirt",
+price:1299,
+category:"men",
+image:"https://images.unsplash.com/photo-1603252110481-7ba873bf42ab?auto=format&fit=crop&w=800&q=80"
+},
+
+{
+name:"Classic White Shirt",
+price:1199,
+category:"men",
+image:"https://images.unsplash.com/photo-1596755389378-c31d21fd1273?auto=format&fit=crop&w=800&q=80"
+},
+
+{
+name:"Men Premium Jacket",
+price:1999,
+category:"men",
+image:"https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80"
+},
+
+{
+name:"Women Black Dress",
+price:1799,
+category:"women",
+image:"https://images.unsplash.com/photo-1566174053879-31528523f8ae?auto=format&fit=crop&w=800&q=80"
+},
+
+{
+name:"Women Casual Outfit",
+price:1499,
+category:"women",
+image:"https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=800&q=80"
+},
+
+{
+name:"Women Premium Dress",
+price:2199,
+category:"women",
+image:"https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=800&q=80"
+}
+
+];
+
+let currentCategory="all";
+let cart=0;
+
+function showProducts(){
+
+    const search =
+      document.getElementById("search").value.toLowerCase();
+
+    const container =
+      document.getElementById("products");
+
+    container.innerHTML="";
+
+    products
+    .filter(p =>
+        (currentCategory==="all" ||
+        p.category===currentCategory) &&
+        p.name.toLowerCase().includes(search)
+    )
+    .forEach(p=>{
+
+        container.innerHTML += `
+
+        <div class="product">
+
+            <img src="${p.image}" alt="${p.name}">
+
+            <div class="info">
+
+                <h3>${p.name}</h3>
+
+                <div class="price">
+                    ₹${p.price}
+                </div>
+
+                <button
+                    class="order"
+                    onclick="orderProduct('${p.name}',${p.price})">
+                    Order on WhatsApp
+                </button>
+
+            </div>
+
+        </div>
+
+        `;
+
+    });
+
+}
+
+function filterProducts(category,button){
+
+    currentCategory=category;
+
+    document
+    .querySelectorAll(".categories button")
+    .forEach(b=>b.classList.remove("active"));
+
+    button.classList.add("active");
+
+    showProducts();
+}
+
+function orderProduct(name,price){
+
+    cart++;
+
+    document.getElementById("cartCount").innerText=cart;
+
+    const message =
+`Hello BAMA 👋
+
+I want to order:
+
+Product: ${name}
+Price: ₹${price}
+
+Please tell me the available sizes and delivery details.`;
+
+    const whatsapp =
+      "https://wa.me/918822153715?text="
+      +encodeURIComponent(message);
+
+    window.open(whatsapp,"_blank");
+}
+
+showProducts();
+
+</script>
+
+</body>
+</html>
